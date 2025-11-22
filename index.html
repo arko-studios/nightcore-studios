@@ -22,11 +22,11 @@
             --track-bg: #333333;
             --hover-bg: rgba(255, 255, 255, 0.1);
             
-            /* New Variables for requested fixes */
-            --shadow-inset: rgba(0,0,0,0.3); /* Dark mode shadow opacity */
-            --album-grad-start: #1e293b;     /* Slate 800 */
-            --album-grad-end: #000000;       /* Black */
-            --album-icon: #334155;           /* Icon color in dark mode */
+            /* Variables for visual fixes */
+            --shadow-inset: rgba(0,0,0,0.3);
+            --album-grad-start: #1e293b;
+            --album-grad-end: #000000;
+            --album-icon: #334155;
         }
 
         [data-theme="light"] {
@@ -41,11 +41,10 @@
             --track-bg: #e2e8f0;
             --hover-bg: rgba(0, 0, 0, 0.05);
 
-            /* Light Mode Overrides */
-            --shadow-inset: rgba(0,0,0,0.03); /* Very subtle shadow for light mode */
-            --album-grad-start: #ffffff;      /* White */
-            --album-grad-end: #cbd5e1;        /* Slate 300 */
-            --album-icon: #94a3b8;            /* Lighter icon for light bg */
+            --shadow-inset: rgba(0,0,0,0.03);
+            --album-grad-start: #ffffff;
+            --album-grad-end: #cbd5e1;
+            --album-icon: #94a3b8;
         }
         
         body {
@@ -56,14 +55,12 @@
             user-select: none;
         }
 
-        /* Unified styling for themed elements */
         .theme-bg-main { background-color: var(--bg-main); }
         .theme-bg-secondary { background-color: var(--bg-secondary); }
         .theme-bg-panel { background: var(--bg-panel); backdrop-filter: blur(12px); border: 1px solid var(--border-color); }
         .theme-text-main { color: var(--text-main); }
         .theme-text-muted { color: var(--text-muted); }
         .theme-border { border-color: var(--border-color); }
-        .theme-hover:hover { background-color: var(--hover-bg); }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
@@ -78,7 +75,6 @@
             min-height: 300px;
             overflow: hidden;
             border-radius: 1rem;
-            /* Use variable for shadow opacity */
             box-shadow: inset 0 0 50px var(--shadow-inset);
             transition: box-shadow 0.3s ease;
         }
@@ -86,20 +82,16 @@
         .album-card-bg {
             background: linear-gradient(to bottom right, var(--album-grad-start), var(--album-grad-end));
         }
-        .album-icon-color {
-            color: var(--album-icon);
-        }
+        .album-icon-color { color: var(--album-icon); }
 
-        /* --- Improved Volume & Speed Sliders --- */
-        /* Common Slider Reset */
+        /* Sliders */
         input[type="range"] {
             -webkit-appearance: none;
             background: transparent;
-            height: 24px; /* Increased touch area */
+            height: 24px;
             cursor: pointer;
         }
         
-        /* The Track */
         input[type="range"]::-webkit-slider-runnable-track {
             width: 100%;
             height: 6px;
@@ -108,7 +100,6 @@
             transition: background 0.3s;
         }
         
-        /* The Thumb */
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 18px;
@@ -116,7 +107,7 @@
             border-radius: 50%;
             background: #ffffff;
             border: 2px solid var(--accent);
-            margin-top: -6px; /* Center on track */
+            margin-top: -6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             transition: transform 0.1s, background 0.3s;
         }
@@ -126,23 +117,14 @@
             background: var(--accent);
         }
 
-        /* Volume Slider Specifics - Dynamic Fill handled in JS */
+        /* Volume Slider */
         #volControl {
             height: 8px;
             border-radius: 4px;
-            /* Gradient background simulates the 'fill' bar */
             background: linear-gradient(to right, var(--accent) 0%, var(--accent) 50%, var(--track-bg) 50%, var(--track-bg) 100%);
         }
-        #volControl::-webkit-slider-runnable-track {
-            background: transparent; /* Hide default track so gradient shows */
-            height: 100%;
-        }
-        #volControl::-webkit-slider-thumb {
-            margin-top: -5px; /* Adjust for new height */
-            background: white;
-            border: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-        }
+        #volControl::-webkit-slider-runnable-track { background: transparent; height: 100%; }
+        #volControl::-webkit-slider-thumb { margin-top: -5px; background: white; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
 
         .song-item { transition: all 0.2s; }
         .song-item.active {
@@ -151,9 +133,7 @@
         }
         .song-item:hover:not(.active) { background: var(--hover-bg); }
 
-        .neon-text {
-            text-shadow: 0 0 15px var(--accent-glow);
-        }
+        .neon-text { text-shadow: 0 0 15px var(--accent-glow); }
 
         .btn-active {
             color: var(--accent);
@@ -169,6 +149,14 @@
             height: 4px;
             background-color: var(--accent);
             border-radius: 50%;
+        }
+
+        /* Reverb Button Glow Effect */
+        .reverb-active {
+            background-color: var(--accent-glow);
+            color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
     </style>
 </head>
@@ -229,25 +217,22 @@
         <!-- Main Player Area -->
         <section class="flex-1 flex flex-col relative bg-gradient-to-b from-[var(--bg-secondary)] to-[var(--bg-main)] transition-colors duration-300">
             
-            <!-- Visualizer Area (Expanded) -->
+            <!-- Visualizer Area -->
             <div class="flex-1 flex flex-col p-6 relative overflow-hidden">
                 <div class="flex-1 w-full visualizer-container theme-bg-panel relative">
                     <canvas id="visualizerCanvas" class="relative z-0"></canvas>
                     
-                    <!-- Static Album Art Template (Updated for Light Mode) -->
+                    <!-- Static Album Art Template -->
                     <div id="albumArtPlaceholder" class="absolute inset-0 flex items-center justify-center theme-bg-main z-10 hidden">
                         <div class="flex flex-col items-center justify-center">
-                            <!-- Replaced hardcoded gradient with CSS class .album-card-bg -->
                             <div class="w-64 h-64 album-card-bg rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.3)] flex items-center justify-center border theme-border relative group overflow-hidden transition-colors duration-300">
-                                <!-- Decorative blurred blob -->
                                 <div class="absolute w-full h-full bg-gradient-to-br from-indigo-600/20 to-purple-600/20 blur-xl"></div>
-                                <!-- Icon color handled by variable -->
                                 <i data-lucide="music-4" class="w-24 h-24 album-icon-color relative z-10 group-hover:scale-110 transition duration-500"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Toggle Button -->
+                    <!-- Toggle Visualizer Button -->
                     <button onclick="toggleVisualizer()" id="visToggleBtn" class="absolute top-4 right-4 p-2 theme-bg-secondary hover:bg-indigo-500/10 backdrop-blur-md border theme-border rounded-lg theme-text-muted hover:text-indigo-400 transition z-20 shadow-lg group" title="Toggle Visualizer">
                         <i data-lucide="activity" class="w-5 h-5"></i>
                     </button>
@@ -272,11 +257,9 @@
                 <div class="w-full flex items-center gap-4 text-xs font-mono theme-text-muted">
                     <span id="currentTime" class="w-10 text-right">0:00</span>
                     <div class="flex-1 relative h-6 flex items-center cursor-pointer group" id="progressBarArea">
-                        <!-- Background Track -->
                         <div class="w-full h-1 bg-slate-500/30 rounded-full overflow-hidden">
                             <div class="h-full bg-indigo-500 w-0 group-hover:bg-indigo-400 transition-colors" id="progressBar"></div>
                         </div>
-                        <!-- Interactive Handle (visible on hover/drag) -->
                         <div class="absolute h-3 w-3 bg-white rounded-full shadow-[0_0_10px_rgba(129,140,248,0.8)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" id="progressHandle" style="left: 0%"></div>
                     </div>
                     <span id="totalTime" class="w-10">0:00</span>
@@ -284,12 +267,21 @@
 
                 <div class="flex items-center justify-between gap-6">
                     
-                    <!-- Left: Playback Controls -->
-                    <div class="flex items-center justify-start gap-8 flex-1 min-w-0">
-                        <button onclick="toggleShuffle()" id="shuffleBtn" class="theme-text-muted hover:text-indigo-400 transition" title="Shuffle">
-                            <i data-lucide="shuffle" class="w-4 h-4"></i>
-                        </button>
+                    <!-- Left: Playback Controls & Reverb -->
+                    <div class="flex items-center justify-start gap-6 flex-1 min-w-0">
+                        <!-- Playback Tools -->
+                        <div class="flex items-center gap-3">
+                             <button onclick="toggleShuffle()" id="shuffleBtn" class="theme-text-muted hover:text-indigo-400 transition p-2 rounded-full hover:bg-white/5" title="Shuffle">
+                                <i data-lucide="shuffle" class="w-4 h-4"></i>
+                            </button>
+                             <button onclick="toggleRepeat()" id="repeatBtn" class="theme-text-muted hover:text-indigo-400 transition p-2 rounded-full hover:bg-white/5" title="Repeat">
+                                <i data-lucide="repeat" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                         
+                        <div class="h-8 w-px bg-slate-700/50"></div>
+
+                        <!-- Main Buttons -->
                         <div class="flex items-center gap-5">
                             <button onclick="prevSong()" class="theme-text-muted hover:text-indigo-400 transition hover:scale-110 active:scale-95"><i data-lucide="skip-back" class="w-6 h-6"></i></button>
                             <button onclick="togglePlay()" id="playBtn" class="w-14 h-14 bg-indigo-500 text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] hover:scale-105 active:scale-95 transition duration-200 hover:bg-indigo-400">
@@ -297,34 +289,38 @@
                             </button>
                             <button onclick="nextSong()" class="theme-text-muted hover:text-indigo-400 transition hover:scale-110 active:scale-95"><i data-lucide="skip-forward" class="w-6 h-6"></i></button>
                         </div>
+                        
+                        <div class="h-8 w-px bg-slate-700/50"></div>
 
-                        <button onclick="toggleRepeat()" id="repeatBtn" class="theme-text-muted hover:text-indigo-400 transition" title="Repeat">
-                            <i data-lucide="repeat" class="w-4 h-4"></i>
+                         <!-- NEW REVERB BUTTON -->
+                         <button onclick="toggleReverb()" id="reverbBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-600 text-xs font-semibold theme-text-muted hover:border-indigo-500 hover:text-indigo-400 transition duration-300" title="Add Atmospheric Reverb">
+                            <i data-lucide="waves" class="w-4 h-4"></i>
+                            Reverb
                         </button>
                     </div>
 
-                    <!-- Center: Speed Control -->
+                    <!-- Center: Extended Speed Control -->
                     <div class="flex flex-col items-center justify-center flex-1">
-                        <div class="flex flex-col w-full max-w-[200px] gap-1">
+                        <div class="flex flex-col w-full max-w-[240px] gap-1">
                             <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest theme-text-muted opacity-70">
+                                <span>Slowed</span>
                                 <span>Normal</span>
                                 <span class="text-indigo-500">Nightcore</span>
-                                <span>Hyper</span>
                             </div>
-                            <input type="range" id="speedControl" min="1.0" max="1.5" step="0.01" value="1.25" class="w-full">
+                            <!-- Extended Range: 0.6 (Slow) to 1.5 (Fast) -->
+                            <input type="range" id="speedControl" min="0.6" max="1.5" step="0.01" value="1.25" class="w-full">
                             <div class="text-center">
                                 <span id="speedValue" class="text-xs font-mono text-indigo-500 font-bold bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">1.25x</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right: Volume & Download (IMPROVED) -->
+                    <!-- Right: Volume & Download -->
                     <div class="flex items-center justify-end gap-6 flex-1 min-w-0">
                         <div class="flex items-center gap-3 group theme-bg-secondary p-2 rounded-lg border theme-border shadow-inner min-w-[140px]">
                             <button onclick="toggleMute()" class="theme-text-muted hover:text-indigo-400 transition flex-shrink-0">
                                 <i data-lucide="volume-2" id="volIcon" class="w-5 h-5"></i>
                             </button>
-                            <!-- Improved Volume Slider -->
                             <input type="range" id="volControl" min="0" max="1" step="0.01" value="0.8" class="w-24 flex-1">
                         </div>
                         <button onclick="downloadCurrent()" id="downloadBtn" class="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-lg text-sm font-semibold shadow-lg shadow-indigo-900/50 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none active:translate-y-0.5 whitespace-nowrap">
@@ -343,19 +339,23 @@
 
         // --- State Management ---
         let playlist = [];
-        let originalPlaylistOrder = [];
         let currentIndex = -1;
         
-        // Audio Context vars
+        // Audio Context & Node Vars
         let audioCtx = null;
         let sourceNode = null;
-        let gainNode = null;
+        let masterGain = null; // Master volume
+        let dryGain = null;    // Dry signal level
+        let wetGain = null;    // Reverb signal level
+        let convolver = null;  // Reverb node
         let analyser = null;
         let audioBuffer = null;
+        let reverbBuffer = null; // Holds the impulse response
         
         // Playback State
         let isPlaying = false;
         let isVisualizerOn = true;
+        let isReverbOn = false;
         let startTime = 0;
         let pausedAt = 0;
         let playbackRate = 1.25;
@@ -384,6 +384,7 @@
         const nowPlayingMeta = document.getElementById('nowPlayingMeta');
         const shuffleBtn = document.getElementById('shuffleBtn');
         const repeatBtn = document.getElementById('repeatBtn');
+        const reverbBtn = document.getElementById('reverbBtn');
         const themeBtn = document.getElementById('themeBtn');
         const canvas = document.getElementById('visualizerCanvas');
         const ctx = canvas.getContext('2d');
@@ -403,7 +404,7 @@
                 themeBtn.innerHTML = '<i data-lucide="moon" class="w-4 h-4 text-indigo-400"></i>';
             }
             lucide.createIcons();
-            updateVolumeSliderFill(); // Re-calc colors for slider
+            updateVolumeSliderFill();
         }
 
         // --- Volume Slider Fill Logic ---
@@ -411,7 +412,6 @@
             const val = volControl.value;
             const percentage = (val - volControl.min) / (volControl.max - volControl.min) * 100;
             
-            // Dynamic colors based on theme
             const accentColor = currentTheme === 'dark' ? '#818cf8' : '#4f46e5';
             const trackColor = currentTheme === 'dark' ? '#333333' : '#e2e8f0';
             
@@ -419,10 +419,9 @@
         }
 
         volControl.addEventListener('input', (e) => {
-            if (gainNode) gainNode.gain.value = e.target.value;
+            if (masterGain) masterGain.gain.value = e.target.value;
             updateVolumeSliderFill();
             
-            // Update icon based on level
             const icon = document.getElementById('volIcon');
             if(e.target.value == 0) icon.setAttribute('data-lucide', 'volume-x');
             else if(e.target.value < 0.5) icon.setAttribute('data-lucide', 'volume-1');
@@ -430,11 +429,9 @@
             lucide.createIcons();
         });
         
-        // Init volume slider look
         updateVolumeSliderFill();
 
-
-        // --- Init Audio ---
+        // --- Audio Context & Reverb Impulse Generation ---
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -443,9 +440,31 @@
                 audioCtx.resume();
             }
             setupMediaKeys();
+            if(!reverbBuffer) generateReverbImpulse();
         }
 
-        // --- Keyboard & Media Key Support ---
+        // Procedural Reverb Impulse (Simple Decay Noise)
+        function generateReverbImpulse() {
+            const duration = 2.5; // Seconds
+            const decay = 2.0;
+            const rate = audioCtx.sampleRate;
+            const length = rate * duration;
+            const impulse = audioCtx.createBuffer(2, length, rate);
+            const left = impulse.getChannelData(0);
+            const right = impulse.getChannelData(1);
+
+            for (let i = 0; i < length; i++) {
+                // Exponential decay
+                const n = i / length;
+                const volume = Math.pow(1 - n, decay);
+                // Random noise * decay
+                left[i] = (Math.random() * 2 - 1) * volume;
+                right[i] = (Math.random() * 2 - 1) * volume;
+            }
+            reverbBuffer = impulse;
+        }
+
+        // --- Keyboard Support ---
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
@@ -475,7 +494,7 @@
             }
         }
 
-        // --- Drag & Drop Support ---
+        // --- Drag & Drop ---
         window.addEventListener('dragover', e => e.preventDefault());
         window.addEventListener('drop', e => {
             e.preventDefault();
@@ -484,14 +503,11 @@
             }
         });
 
-        // --- File Handling ---
         function handleFiles(files) {
             const newSongs = Array.from(files).filter(f => f.type.startsWith('audio/'));
             if (newSongs.length === 0) return;
 
             playlist = [...playlist, ...newSongs];
-            originalPlaylistOrder = [...playlist]; 
-            
             updatePlaylistUI();
             
             if (currentIndex === -1) {
@@ -514,7 +530,6 @@
             totalTimeEl.textContent = "0:00";
         }
 
-        // --- Playlist UI ---
         function updatePlaylistUI() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             playlistEl.innerHTML = '';
@@ -535,8 +550,6 @@
                 div.onclick = () => loadSong(index);
                 
                 const name = file.name.replace(/\.[^/.]+$/, "");
-                
-                // Conditional styling for text inside the item
                 const textColorClass = index === currentIndex ? 'text-indigo-500 font-bold' : 'theme-text-main';
                 const numColorClass = index === currentIndex ? 'text-indigo-500' : 'theme-text-muted';
 
@@ -562,18 +575,16 @@
         
         document.getElementById('searchInput').addEventListener('input', updatePlaylistUI);
 
-        // --- Mode Toggles ---
+        // --- Logic Toggles ---
         function toggleShuffle() {
             isShuffle = !isShuffle;
             shuffleBtn.classList.toggle('btn-active', isShuffle);
-            // Adjust color helper
             if(isShuffle) shuffleBtn.classList.add('text-indigo-500');
             else shuffleBtn.classList.remove('text-indigo-500');
         }
 
         function toggleRepeat() {
             repeatMode = (repeatMode + 1) % 3;
-            
             repeatBtn.classList.remove('btn-active', 'text-indigo-500');
             repeatBtn.innerHTML = '<i data-lucide="repeat" class="w-4 h-4"></i>';
 
@@ -588,7 +599,6 @@
         
         function toggleVisualizer() {
             isVisualizerOn = !isVisualizerOn;
-            
             if (isVisualizerOn) {
                 canvas.style.opacity = '1';
                 albumArtPlaceholder.classList.add('hidden');
@@ -604,7 +614,28 @@
             lucide.createIcons();
         }
 
-        // --- Audio Engine Core ---
+        function toggleReverb() {
+            isReverbOn = !isReverbOn;
+            
+            if(isReverbOn) {
+                reverbBtn.classList.add('reverb-active');
+            } else {
+                reverbBtn.classList.remove('reverb-active');
+            }
+
+            // Real-time update if playing
+            if(isPlaying && dryGain && wetGain) {
+                if(isReverbOn) {
+                    dryGain.gain.setTargetAtTime(0.7, audioCtx.currentTime, 0.1);
+                    wetGain.gain.setTargetAtTime(0.5, audioCtx.currentTime, 0.1);
+                } else {
+                    dryGain.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.1);
+                    wetGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+                }
+            }
+        }
+
+        // --- Audio Engine ---
         async function loadSong(index) {
             initAudio();
             if (index < 0 || index >= playlist.length) return;
@@ -635,7 +666,7 @@
                     
                     const name = file.name.replace(/\.[^/.]+$/, "");
                     nowPlayingTitle.textContent = name;
-                    nowPlayingMeta.textContent = `Original: ${(audioBuffer.duration / 60).toFixed(2)}m • Nightcore Speed: ${playbackRate}x`;
+                    nowPlayingMeta.textContent = `Original: ${(audioBuffer.duration / 60).toFixed(2)}m • Speed: ${playbackRate}x`;
                     
                     updateMediaSessionMetadata(name);
 
@@ -650,27 +681,53 @@
         function playAudio(offset) {
             if (!audioBuffer) return;
             
+            // Cleanup previous
             if (sourceNode) {
                 try { sourceNode.stop(); } catch(e){}
                 sourceNode.disconnect();
             }
 
+            // Source
             sourceNode = audioCtx.createBufferSource();
             sourceNode.buffer = audioBuffer;
             sourceNode.playbackRate.value = playbackRate;
 
+            // Nodes Setup (Only create once per context if possible, but recreating graph for safety here)
             if(!analyser) {
                 analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 512; 
+                analyser.fftSize = 512;
             }
-            if(!gainNode) {
-                gainNode = audioCtx.createGain();
-                gainNode.gain.value = volControl.value;
-                gainNode.connect(audioCtx.destination);
-                analyser.connect(gainNode);
+            if(!masterGain) {
+                masterGain = audioCtx.createGain();
+                masterGain.gain.value = volControl.value;
+                masterGain.connect(audioCtx.destination);
+                analyser.connect(masterGain); // Analyser feeds master volume
             }
 
-            sourceNode.connect(analyser);
+            // Create Mixer Nodes
+            dryGain = audioCtx.createGain();
+            wetGain = audioCtx.createGain();
+            convolver = audioCtx.createConvolver();
+            convolver.buffer = reverbBuffer; // Use our generated impulse
+
+            // Connect Graph
+            // Path 1: Source -> DryGain -> Analyser
+            sourceNode.connect(dryGain);
+            dryGain.connect(analyser);
+
+            // Path 2: Source -> Convolver -> WetGain -> Analyser
+            sourceNode.connect(convolver);
+            convolver.connect(wetGain);
+            wetGain.connect(analyser);
+
+            // Set Initial Levels based on Reverb Toggle
+            if (isReverbOn) {
+                dryGain.gain.value = 0.7;
+                wetGain.gain.value = 0.5;
+            } else {
+                dryGain.gain.value = 1.0;
+                wetGain.gain.value = 0.0;
+            }
 
             startTime = audioCtx.currentTime - (offset / playbackRate);
             pausedAt = offset;
@@ -684,6 +741,7 @@
 
             sourceNode.onended = () => {
                 const currentBufferTime = (audioCtx.currentTime - startTime) * playbackRate;
+                // Check if naturally ended (vs stopped)
                 if (Math.abs(currentBufferTime - audioBuffer.duration) < 0.5 || currentBufferTime > audioBuffer.duration) {
                     handleSongEnd();
                 }
@@ -726,7 +784,6 @@
                 playAudio(0);
                 return;
             }
-
             if (currentIndex > 0) {
                 loadSong(currentIndex - 1);
             } else {
@@ -761,12 +818,9 @@
 
         progressBarArea.addEventListener('click', (e) => {
             if (!audioBuffer) return;
-            
             const rect = progressBarArea.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
-            const width = rect.width;
-            const percent = Math.max(0, Math.min(1, clickX / width));
-            
+            const percent = Math.max(0, Math.min(1, clickX / rect.width));
             const seekToBufferTime = audioBuffer.duration * percent;
             
             if (isPlaying) {
@@ -819,6 +873,8 @@
             }
 
             speedValue.textContent = playbackRate.toFixed(2) + 'x';
+            nowPlayingMeta.textContent = `Original: ${(audioBuffer ? (audioBuffer.duration/60).toFixed(2) : 0)}m • Speed: ${playbackRate}x`;
+            
             if(audioBuffer) {
                  const effectiveDuration = audioBuffer.duration / playbackRate;
                  totalTimeEl.textContent = formatTime(effectiveDuration);
@@ -858,7 +914,6 @@
                     gradient.addColorStop(0.5, '#818cf8');
                     gradient.addColorStop(1, '#22d3ee');
                 } else {
-                     // Light mode specific gradient (more vibrant)
                     gradient.addColorStop(0, '#4338ca'); 
                     gradient.addColorStop(0.5, '#6366f1');
                     gradient.addColorStop(1, '#06b6d4');
@@ -873,6 +928,7 @@
             if(isPlaying && isVisualizerOn) requestAnimationFrame(drawVisualizer);
         }
 
+        // --- Export / Download Logic ---
         async function downloadCurrent() {
             if (!audioBuffer) return;
 
@@ -880,19 +936,50 @@
             downloadBtn.disabled = true;
             downloadText.textContent = "Processing...";
 
+            // Prepare offline context
             const newDuration = audioBuffer.duration / playbackRate;
+            // Add a little extra tail for reverb tail if active
+            const tail = isReverbOn ? 3.0 : 0;
+            const renderDuration = newDuration + tail;
+
             const offlineCtx = new OfflineAudioContext(
                 audioBuffer.numberOfChannels,
-                newDuration * audioBuffer.sampleRate,
+                renderDuration * audioBuffer.sampleRate,
                 audioBuffer.sampleRate
             );
 
-            const offlineSource = offlineCtx.createBufferSource();
-            offlineSource.buffer = audioBuffer;
-            offlineSource.playbackRate.value = playbackRate;
+            // Recreate Graph Offline
+            const offSource = offlineCtx.createBufferSource();
+            offSource.buffer = audioBuffer;
+            offSource.playbackRate.value = playbackRate;
+
+            const offDry = offlineCtx.createGain();
+            const offWet = offlineCtx.createGain();
+            const offConvolver = offlineCtx.createConvolver();
             
-            offlineSource.connect(offlineCtx.destination);
-            offlineSource.start(0);
+            // Re-generate impulse for offline context (optional, but cleaner to share buffer)
+            // We can reuse the same buffer actually
+            offConvolver.buffer = reverbBuffer;
+
+            // Connect
+            offSource.connect(offDry);
+            
+            offSource.connect(offConvolver);
+            offConvolver.connect(offWet);
+
+            offDry.connect(offlineCtx.destination);
+            offWet.connect(offlineCtx.destination);
+
+            // Set Levels
+            if (isReverbOn) {
+                offDry.gain.value = 0.7;
+                offWet.gain.value = 0.5;
+            } else {
+                offDry.gain.value = 1.0;
+                offWet.gain.value = 0.0;
+            }
+
+            offSource.start(0);
 
             try {
                 const renderedBuffer = await offlineCtx.startRendering();
@@ -903,7 +990,10 @@
                 a.style.display = 'none';
                 a.href = url;
                 const originalName = playlist[currentIndex].name.replace(/\.[^/.]+$/, "");
-                a.download = `${originalName}_Nightcore_${playbackRate}x.wav`;
+                const type = playbackRate < 1.0 ? "Slowed" : (playbackRate > 1.1 ? "Nightcore" : "Edit");
+                const reverbTag = isReverbOn ? "_Reverb" : "";
+                
+                a.download = `${originalName}_${type}${reverbTag}.wav`;
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
@@ -921,6 +1011,7 @@
             }
         }
 
+        // Helper to convert AudioBuffer to WAV
         function bufferToWave(abuffer, len) {
             let numOfChan = abuffer.numberOfChannels,
                 length = len * numOfChan * 2 + 44,
@@ -930,10 +1021,10 @@
                 offset = 0,
                 pos = 0;
 
-            setUint32(0x46464952); 
+            setUint32(0x46464952); // "RIFF"
             setUint32(length - 8); 
-            setUint32(0x45564157); 
-            setUint32(0x20746d66); 
+            setUint32(0x45564157); // "WAVE"
+            setUint32(0x20746d66); // "fmt "
             setUint32(16); 
             setUint16(1); 
             setUint16(numOfChan);
@@ -941,7 +1032,7 @@
             setUint32(abuffer.sampleRate * 2 * numOfChan); 
             setUint16(numOfChan * 2); 
             setUint16(16); 
-            setUint32(0x61746164); 
+            setUint32(0x61746164); // "data"
             setUint32(length - pos - 4); 
 
             for(i = 0; i < abuffer.numberOfChannels; i++)
@@ -964,14 +1055,14 @@
 
         function toggleMute() {
             const vol = document.getElementById('volControl');
-            if (gainNode) {
-                if(gainNode.gain.value > 0) {
-                    vol.dataset.prev = gainNode.gain.value;
-                    gainNode.gain.value = 0;
+            if (masterGain) {
+                if(masterGain.gain.value > 0) {
+                    vol.dataset.prev = masterGain.gain.value;
+                    masterGain.gain.value = 0;
                     vol.value = 0;
                 } else {
-                    gainNode.gain.value = vol.dataset.prev || 0.8;
-                    vol.value = gainNode.gain.value;
+                    masterGain.gain.value = vol.dataset.prev || 0.8;
+                    vol.value = masterGain.gain.value;
                 }
                 updateVolumeSliderFill();
                 
